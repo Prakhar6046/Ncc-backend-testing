@@ -59,24 +59,55 @@ app.use(express.json());
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 //MongoDb setup
 connectToDatabase();
-cron.schedule("0 0 * * *", () => {
-  console.log("Running daily business data refresh...");
-  refreshBusinessDataDaily();
-});
-cron.schedule("0 0 * * 0", () => {
+
+// Only run cron jobs if not on Vercel (Vercel uses its own cron system)
+if (process.env.VERCEL !== "1") {
+  cron.schedule("0 0 * * *", () => {
+    console.log("Running daily business data refresh...");
+    refreshBusinessDataDaily();
+  });
+  cron.schedule("0 0 * * 0", () => {
     console.log("Running weekly business data refresh...");
     refreshBusinessDataWeekly();
   });
-  app.get("/", (req: Request, res: Response) => {
-    res.send("Hello World");
-  });
-//setup the Port
+}
+
+// Cron job endpoints for Vercel
+app.get("/api/cron/daily", async (req: Request, res: Response) => {
+  try {
+    await refreshBusinessDataDaily();
+    res.status(200).json({ message: "Daily business data refresh completed" });
+  } catch (error) {
+    console.error("Error in daily cron job:", error);
+    res.status(500).json({ error: "Failed to run daily cron job" });
+  }
+});
+
+app.get("/api/cron/weekly", async (req: Request, res: Response) => {
+  try {
+    await refreshBusinessDataWeekly();
+    res.status(200).json({ message: "Weekly business data refresh completed" });
+  } catch (error) {
+    console.error("Error in weekly cron job:", error);
+    res.status(500).json({ error: "Failed to run weekly cron job" });
+  }
+});
+
+app.get("/", (req: Request, res: Response) => {
+  res.send("Hello World");
+});
+
 //All Rout use
 app.use(route);
-const PORT: number = 5000;
-// Schedule the task to run daily at midnight
 
-app.listen(PORT, () => {
-  console.log("server has started on port");
-  console.log("http://localhost:" + PORT);
-});
+// Only start server if not on Vercel
+if (process.env.VERCEL !== "1") {
+  const PORT: number = process.env.PORT ? parseInt(process.env.PORT) : 5000;
+  app.listen(PORT, () => {
+    console.log("server has started on port");
+    console.log("http://localhost:" + PORT);
+  });
+}
+
+// Export app for Vercel
+export default app;
