@@ -1,0 +1,187 @@
+input {
+    accent-color: orange;
+
+    &[type="radio"] {
+        transform: scale(1.7);
+    }
+}
+.form_container {
+    margin-bottom: 30px;
+    border: 1px solid #f4f4f4;
+    background-color: #ffffff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.04);
+    padding: 40px;
+    @media (max-width: 768px) {
+        padding: 20px;
+    }
+    border-radius: 10px;
+    border-top: 6px solid orange;
+
+    &.form_in_modal {
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0;
+        border: 0;
+    }
+
+    .former_row {
+        margin-bottom: 15px;
+        label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #444444;
+        }
+    }
+
+    &.form_container_hilight {
+        background-color: orange;
+        border: 1px solid rgb(231, 150, 0);
+        border-top: 6px solid rgb(231, 150, 0);
+        box-shadow: 0 0 20px rgba(231,150,0,0.08);
+        p {
+            color: #ffffff;
+        }
+    }
+
+    &.text_center {
+        text-align: center;
+    }
+}
+.mandatory {
+    color: red;
+}
+
+.select_product_type {
+    &:checked ~ .single_check {
+        border-color: #000000;
+
+        cursor: default;
+
+        .type_of_car {
+            color: orange
+        }
+    }
+}
+
+.single_product {
+    background-color: #ffffff;
+
+    &.card_review {
+        flex-direction: column;
+        &:hover {
+            border-color: transparent;
+            cursor: default;
+        }
+
+        .metadata_product {
+            width: 100%;
+            .title_product {
+                width: 100%;
+                border-bottom: 1px solid #ccc;
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+    }
+
+    .btn {
+        display: none;
+    }
+    
+
+}
+
+.radio_single_product {
+    display: none;
+    
+    &:checked ~ .single_product {
+        border-color: #000000;
+
+        .change_product {
+            display: flex;
+        }
+
+        .title_product {
+            color: orange
+        }
+    }
+}
+
+.filter_box {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background-color: #ffffff;
+
+    img {
+        flex-shrink: 0;
+    }
+
+    input {
+        width: 100%;
+        border: 0;
+        outline: none;
+    }
+}
+.single_check {
+    box-shadow: 0 0 20px rgba(0,0,0,.04);
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+    cursor: pointer;
+
+    &:hover {
+        border-color: #dfdfdf;
+    }
+
+    &.is_checked {
+        width: 100%;
+    }
+
+    input {
+        &:checked {
+            border-color: red;
+        }
+    }
+    
+    .container_image_icon {
+        display: flex;
+        width: 60px;
+        height: 60px;
+        background-color: #ffffff;
+        border: 1px solid rgba(0,0,0,0.1);
+        border-radius: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        img {
+            width: 35px;
+            height: auto;
+        }
+    }
+    
+    .type_of_car {
+        font-size: 20px;
+        font-weight: bold;
+    }
+}
+
+.form-control:focus,
+.form-select:focus {
+
+    background-color: rgba(255, 166, 0, 0.017);
+    border-color: orange;
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(255, 166, 0, 0.12);;
+}

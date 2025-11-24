@@ -1,0 +1,82 @@
+/* Calendar input look */
+.cal-input {
+  border: 1px solid orange;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: white;
+  color: #333;
+  font-weight: 500;
+  transition: 0.2s ease-in-out;
+  min-width: 200px;
+}
+
+.cal-input:hover {
+  background-color: #fff5eb;
+  border-color: darkorange;
+}
+
+.cal-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.cal-popup {
+  z-index: 100;
+}
+
+/* Orange calendar styles */
+.react-calendar {
+  border: none;
+  font-family: inherit;
+}
+
+.react-calendar__tile--active {
+  background: orange !important;
+  color: white !important;
+  border-radius: 8px;
+}
+
+.react-calendar__tile--now {
+  background: rgba(255, 165, 0, 0.2) !important;
+  color: orange !important;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.react-calendar__tile:hover {
+  background: rgba(255, 165, 0, 0.15) !important;
+  border-radius: 8px;
+}
+
+.react-calendar__navigation button {
+  color: orange;
+}
+
+.react-calendar__navigation button:hover {
+  background: rgba(255, 165, 0, 0.2);
+  border-radius: 5px;
+}
+
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  font-weight: 600;
+  color: orange;
+  padding: 8px 0;
+}
+
+/* Remove dotted underline from calendar weekdays */
+.react-calendar__month-view__weekdays abbr {
+  text-decoration: none;
+  cursor: default;
+}
+
+/* Optional utility */
+.text-orange {
+  color: orange;
+}
+
+.outline-none {
+  outline: none;
+}
