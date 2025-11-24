@@ -1,0 +1,27 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const passport_1 = __importDefault(require("passport"));
+const RequestNccService_1 = __importDefault(require("../../controller/NccServiceController/RequestNccService"));
+const GetAllServices_1 = __importDefault(require("../../controller/NccServiceController/GetAllServices"));
+const getCityRequestService_1 = __importDefault(require("../../controller/NccServiceController/getCityRequestService"));
+const singleOrder_1 = __importDefault(require("../../controller/NccServiceController/singleOrder"));
+const getDriverAcceptedOrders_1 = __importDefault(require("../../controller/NccServiceController/getDriverAcceptedOrders"));
+const getSingleAcceptedOrder_1 = __importDefault(require("../../controller/NccServiceController/getSingleAcceptedOrder"));
+const acceptOrder_1 = __importDefault(require("../../controller/NccServiceController/acceptOrder"));
+const rejectOrder_1 = __importDefault(require("../../controller/NccServiceController/rejectOrder"));
+const completeOrder_1 = __importDefault(require("../../controller/NccServiceController/completeOrder"));
+const NccServiceroutes = (0, express_1.default)();
+NccServiceroutes.post("/request-service", passport_1.default.authenticate("jwt", { session: false }), RequestNccService_1.default);
+NccServiceroutes.post("/accept-order", passport_1.default.authenticate("jwt", { session: false }), acceptOrder_1.default);
+NccServiceroutes.post("/complete-order", passport_1.default.authenticate("jwt", { session: false }), completeOrder_1.default);
+NccServiceroutes.get("/all-services", passport_1.default.authenticate("jwt", { session: false }), GetAllServices_1.default);
+NccServiceroutes.get("/all-city-services", passport_1.default.authenticate("jwt", { session: false }), getCityRequestService_1.default);
+NccServiceroutes.get("/single-order/:orderId", passport_1.default.authenticate("jwt", { session: false }), singleOrder_1.default);
+NccServiceroutes.get("/accepted-order", passport_1.default.authenticate("jwt", { session: false }), getDriverAcceptedOrders_1.default);
+NccServiceroutes.get("/accept-single-order/:acceptedOrderId", passport_1.default.authenticate("jwt", { session: false }), getSingleAcceptedOrder_1.default);
+NccServiceroutes.post("/reject-order", passport_1.default.authenticate("jwt", { session: false }), rejectOrder_1.default);
+exports.default = NccServiceroutes;
