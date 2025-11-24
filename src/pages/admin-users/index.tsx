@@ -5,8 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {} from "../../redux/reducers/adminSlice";
 import { SingleHotel } from "../../TSModels/Admin";
 import Loader from "../../components/Loader";
-import { decryptData, SearchData } from "../../utilities/utils";
-import SuperAdminMenu from "../../components/superadmin-menu";
+import { SearchData } from "../../utilities/utils";
 import {
   SelectAllHotelInfo,
   selectIsLoading,
@@ -14,7 +13,7 @@ import {
 import { AllHotelsList } from "../../redux/thunks/superAdmin";
 
 const AdminUsers = () => {
-  const user = decryptData("nccUser");
+  // const user = decryptData("nccUser");
   const dispatch = useAppDispatch();
   const allHotels = useAppSelector(SelectAllHotelInfo);
   const isAdminLoading = useAppSelector(selectIsLoading);

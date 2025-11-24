@@ -41,7 +41,6 @@ import {
     handleSubmit,
     errors,
     reset,
-    setValue,
     cityList,
     editingCapoflotta,
     setEditingCapoflotta,
