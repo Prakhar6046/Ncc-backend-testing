@@ -28,6 +28,7 @@ export interface SingleAdmin {
   password: string;
   city: string;
   cityId: string;
+  userType?: string;
 }
 export interface SingleCity {
   _id: string;
