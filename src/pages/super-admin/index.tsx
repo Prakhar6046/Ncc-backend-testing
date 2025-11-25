@@ -34,25 +34,30 @@ const SuperAdmin = () => {
   const [search, setSearch] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 5;
-  const totalPages = admins ? Math.ceil(admins.length / itemsPerPage) : 0;
+  
+  // Filter admins to only show those with userType === "admin"
+  const filteredAdmins = admins?.filter((admin) => admin.userType === "admin") || [];
+  const totalPages = filteredAdmins ? Math.ceil(filteredAdmins.length / itemsPerPage) : 0;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
   useEffect(() => {
-    if (admins) {
-      const startIndex = (currentPage - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-      const currentAdmins = admins?.slice(startIndex, endIndex);
-      setAdminList(currentAdmins);
+    if (filteredAdmins.length > 0) {
+      if (search) {
+        const filterAdmins = SearchData(filteredAdmins, "email", search);
+        setAdminList(filterAdmins);
+        setCurrentPage(1);
+      } else {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const currentAdmins = filteredAdmins.slice(startIndex, endIndex);
+        setAdminList(currentAdmins);
+      }
+    } else {
+      setAdminList([]);
     }
-  }, [admins, currentPage]);
-  useEffect(() => {
-    if (admins) {
-      const filterAdmins = SearchData(admins, "email", search);
-      setAdminList(filterAdmins);
-    }
-  }, [search]);
+  }, [search, filteredAdmins, currentPage]);
   useEffect(() => {
     if (isSuccess) {
       dispatch(GetAllAdmins());
@@ -79,7 +84,7 @@ const SuperAdmin = () => {
           <div className="col-12 col-md-9">
             <div className="header_add_remove">
               <div className="label_counter">
-                {admins?.length ? admins.length : 0} risultati
+                {filteredAdmins?.length ? filteredAdmins.length : 0} risultati
               </div>
               <div className="d-flex">
                 <input
