@@ -194,6 +194,9 @@ const HotelProfile = () => {
                       {...register("password", {
                         pattern: ValidationPattern.passwordPattern,
                       })}
+                      style={{
+                        paddingRight: "34px",
+                      }}
                     />
                     {errors?.password?.type == "required" && (
                       <p className="mt-1 text-danger">
@@ -222,6 +225,9 @@ const HotelProfile = () => {
                           value === getValues().password?.toString() ||
                           "Confirm Password do not match with password!",
                       })}
+                      style={{
+                        paddingRight: "34px",
+                      }}
                     />
                     {watch("password") &&
                       errors?.confirmPassword?.type == "required" && (
