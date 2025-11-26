@@ -56,10 +56,8 @@ import {
   const currentUser = decryptData("nccUser");
   const currentAdminCityId = currentUser?.cityId;
   
-  // Filter cities: when creating new user (not editing), only show current admin's city
-  const filteredCityList = editingCapoflotta 
-    ? cityList 
-    : cityList.filter((city) => city._id === currentAdminCityId);
+  // Filter cities: always show only current admin's city (both create and edit)
+  const filteredCityList = cityList.filter((city) => city._id === currentAdminCityId);
   
     const onSubmit = async (data: CreateCapoflottaPayload & { confirmPassword: string }) => {
       const selectedCity = cityList?.find((city) => city._id === data.city);
