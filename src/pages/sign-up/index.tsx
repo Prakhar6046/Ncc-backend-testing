@@ -167,6 +167,9 @@ const SignUp = () => {
                           required: true,
                           pattern: ValidationPattern.passwordPattern,
                         })}
+                        style={{
+                          paddingRight: "34px",
+                        }}
                       />
                        <span
                       style={{position: "absolute", bottom: "7px", right: "6px"}}
@@ -207,6 +210,9 @@ const SignUp = () => {
                             value === getValues().password?.toString() ||
                             "Confirm Password do not match with password!",
                         })}
+                        style={{
+                          paddingRight: "34px",
+                        }}
                       />
                        <span
                       style={{position: "absolute", bottom: "7px", right: "6px"}}
