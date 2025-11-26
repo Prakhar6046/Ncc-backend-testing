@@ -24,6 +24,7 @@ import {
   import { SingleCity } from "../../TSModels/SuperAdmin";
   import { Admin } from "../../TSModels/Admin";
   import Loader from "../Loader";
+  import { decryptData } from "../../utilities/utils";
   
   interface IProps {
     register: UseFormRegister<any>;
@@ -45,11 +46,20 @@ import {
     editingDitta,
     setEditingDitta,
   }: IProps) => {
-    const dispatch = useAppDispatch();
-    const isSuccess = useAppSelector((state) => state.admin.isSuccess);
-    const isLoading = useAppSelector(SelectIsLoading);
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const dispatch = useAppDispatch();
+  const isSuccess = useAppSelector((state) => state.admin.isSuccess);
+  const isLoading = useAppSelector(SelectIsLoading);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
+  // Get current logged-in admin's city
+  const currentUser = decryptData("nccUser");
+  const currentAdminCityId = currentUser?.cityId;
+  
+  // Filter cities: when creating new user (not editing), only show current admin's city
+  const filteredCityList = editingDitta 
+    ? cityList 
+    : cityList.filter((city) => city._id === currentAdminCityId);
   
     const onSubmit = async (data: CreateDittaIndividualePayload & { confirmPassword: string }) => {
       const selectedCity = cityList?.find((city) => city._id === data.city);
@@ -161,9 +171,9 @@ import {
                             })}
                           >
                             <option value=""></option>
-                            {cityList &&
-                              cityList.length !== 0 &&
-                              cityList.map((city) => (
+                            {filteredCityList &&
+                              filteredCityList.length !== 0 &&
+                              filteredCityList.map((city) => (
                                 <option
                                   value={city._id}
                                   key={city._id}
