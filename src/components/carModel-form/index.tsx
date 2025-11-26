@@ -54,14 +54,22 @@ const CarModelForm = ({
 
   const user = decryptData("nccUser");
   const onSubmit = (data: AddNewCarModel) => {
+    // Trim all string fields to remove leading/trailing spaces
+    const trimmedData = {
+      ...data,
+      targa: data.targa?.trim(),
+      module: data.module?.trim(),
+      licenseNumber: data.licenseNumber?.trim(),
+    };
+    
     if (!isEdit) {
       const payload = {
-        ...data,
+        ...trimmedData,
       };
       dispatch(CreateCarModel(payload));
     } else {
       const payload = {
-        ...data,
+        ...trimmedData,
         carModelId: info?._id,
       };
       dispatch(UpdateCarModel(payload));
@@ -140,13 +148,15 @@ const CarModelForm = ({
                         className="select_product_type"
                         id="berlina"
                         type="radio"
-                        //   name="carType"
                         value={4}
                         hidden
                         {...register("carType", {
-                          required: true,
+                          required: "Seleziona un tipo di veicolo",
                         })}
                         checked={watch("carType") == 4 ? true : false}
+                        onChange={() => {
+                          setValue("carType", 4, { shouldValidate: true });
+                        }}
                       />
                       <label htmlFor="berlina" className="single_check">
                         <span className="container_image_icon">
@@ -160,14 +170,15 @@ const CarModelForm = ({
                         className="select_product_type"
                         id="van"
                         type="radio"
-                        //   name="carType"
                         value={6}
                         hidden
                         checked={watch("carType") == 6 ? true : false}
                         {...register("carType", {
-                          required: true,
-                          value: watch("carType"),
+                          required: "Seleziona un tipo di veicolo",
                         })}
+                        onChange={() => {
+                          setValue("carType", 6, { shouldValidate: true });
+                        }}
                       />
                       <label htmlFor="van" className="single_check">
                         <span className="container_image_icon">
@@ -181,14 +192,15 @@ const CarModelForm = ({
                         className="select_product_type"
                         id="lusso"
                         type="radio"
-                        //   name="carType"
                         value={8}
                         hidden
                         checked={watch("carType") == 8 ? true : false}
                         {...register("carType", {
-                          required: true,
-                          value: watch("carType"),
+                          required: "Seleziona un tipo di veicolo",
                         })}
+                        onChange={() => {
+                          setValue("carType", 8, { shouldValidate: true });
+                        }}
                       />
                       <label htmlFor="lusso" className="single_check">
                         <span className="container_image_icon">
@@ -197,12 +209,16 @@ const CarModelForm = ({
                         <span className="type_of_car">Lusso</span>
                       </label>
                     </div>
-                    {errors?.carType?.type == "required" && (
-                      <p className="mt-1 text-danger">
-                        {ValidationMessage.required}
-                      </p>
-                    )}
                   </div>
+                  {errors?.carType && (
+                    <div className="row">
+                      <div className="col-12">
+                        <p className="mt-1 text-danger mb-3">
+                          {errors.carType.message?.toString() || ValidationMessage.required}
+                        </p>
+                      </div>
+                    </div>
+                  )}
 
                   <div className="row">
                     <div className="col-12 col-md-6">
@@ -215,12 +231,22 @@ const CarModelForm = ({
                           className="form-control"
                           id="carlicenseplate"
                           {...register("targa", {
-                            required: true,
+                            required: ValidationMessage.required,
+                            validate: (value) => {
+                              const trimmed = value?.trim();
+                              if (!trimmed) {
+                                return ValidationMessage.required;
+                              }
+                              if (value !== trimmed) {
+                                return "Il campo non può iniziare o terminare con spazi";
+                              }
+                              return true;
+                            },
                           })}
                         />
-                        {errors?.targa?.type == "required" && (
+                        {errors?.targa && (
                           <p className="mt-1 text-danger">
-                            {ValidationMessage.required}
+                            {errors.targa.message?.toString() || ValidationMessage.required}
                           </p>
                         )}
                       </div>
@@ -235,12 +261,22 @@ const CarModelForm = ({
                           className="form-control"
                           id="carmodel"
                           {...register("module", {
-                            required: true,
+                            required: ValidationMessage.required,
+                            validate: (value) => {
+                              const trimmed = value?.trim();
+                              if (!trimmed) {
+                                return ValidationMessage.required;
+                              }
+                              if (value !== trimmed) {
+                                return "Il campo non può iniziare o terminare con spazi";
+                              }
+                              return true;
+                            },
                           })}
                         />
-                        {errors?.module?.type == "required" && (
+                        {errors?.module && (
                           <p className="mt-1 text-danger">
-                            {ValidationMessage.required}
+                            {errors.module.message?.toString() || ValidationMessage.required}
                           </p>
                         )}
                       </div>
@@ -282,12 +318,22 @@ const CarModelForm = ({
                           className="form-control"
                           id="numberlicence"
                           {...register("licenseNumber", {
-                            required: true,
+                            required: ValidationMessage.required,
+                            validate: (value) => {
+                              const trimmed = value?.trim();
+                              if (!trimmed) {
+                                return ValidationMessage.required;
+                              }
+                              if (value !== trimmed) {
+                                return "Il campo non può iniziare o terminare con spazi";
+                              }
+                              return true;
+                            },
                           })}
                         />
-                        {errors?.licenseNumber?.type == "required" && (
+                        {errors?.licenseNumber && (
                           <p className="mt-1 text-danger">
-                            {ValidationMessage.required}
+                            {errors.licenseNumber.message?.toString() || ValidationMessage.required}
                           </p>
                         )}
                       </div>
